@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import Input from '../../../components/forms/Input/Input';
 import Textarea from '../../../components/forms/Textarea/Textarea';
+import Select from '../../../components/forms/Select/Select';
 
 
 interface FormValues {
@@ -61,6 +62,18 @@ const CadastrarExperiencia: React.FC = () => {
                             errors={errors.anoFim}
                             touched={touched.anoFim}
                         />
+
+                        <Select
+                            label='Tipo'
+                            name='tipo'
+                            options={[
+                                { value: 'profissional', label: 'Profissional' },
+                                { value: 'academico', label: 'Acadêmico' },
+                            ]}
+                            errors={errors.tipo}
+                            touched={touched.tipo}
+                        />
+
 
                         <Textarea
                             label='Descrição'
