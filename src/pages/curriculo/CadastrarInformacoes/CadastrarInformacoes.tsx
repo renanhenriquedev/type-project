@@ -4,20 +4,15 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 
 import Input from '../../../components/forms/Input/Input';
-
 import styles from './CadastrarInformacoes.module.css'
 import Textarea from '../../../components/forms/Textarea/Textarea';
+import {Informacoes, createInformacoes } from '../../../services/informacoesServices';
 
-interface FormValues {
-    foto: string,
-    nome: string,
-    cargo: string,
-    resumo: string
-}
 
 const CadastrarInformacoes: React.FC = () => {
 
-    const initialValues: FormValues = {
+    const initialValues: Informacoes  = {
+        id: 1,
         foto: '',
         nome: '',
         cargo: '',
@@ -31,10 +26,16 @@ const CadastrarInformacoes: React.FC = () => {
         resumo: Yup.string().required('Campo obrigatório')
     })
 
-    const onSubmit = (values: FormValues, { resetForm }: { resetForm: () => void }) => {
-        console.log(values);
-        resetForm()
-        alert('Formulário enviado com sucesso')
+    const onSubmit = async (values: Informacoes, { resetForm }: { resetForm: () => void }) => {
+        try {
+            await createInformacoes(values);
+            console.log(values);
+            resetForm();
+            alert('Formulário enviado com sucesso');
+        } catch (error) {
+            console.error('Erro ao enviar o formulário', error);
+            alert('Ocorreu um erro ao enviar o formulário. Tente Novamente.');
+        }
     }
 
 
