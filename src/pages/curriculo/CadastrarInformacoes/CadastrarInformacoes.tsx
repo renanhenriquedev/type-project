@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+
+import { Formik, Form} from 'formik'
 import * as Yup from 'yup'
 
 import Input from '../../../components/forms/Input/Input';
 import styles from './CadastrarInformacoes.module.css'
 import Textarea from '../../../components/forms/Textarea/Textarea';
-import {Informacoes, createInformacoes } from '../../../services/informacoesServices';
+import {Informacoes, createInformacoes, getInformacoes } from '../../../services/informacoesServices';
+import InformacoesCard from './InformacoesCard/InformacoesCard';
 
 
 const CadastrarInformacoes: React.FC = () => {
+
+    const [informacoes, setInformacoes] = useState<Informacoes>({} as Informacoes);
 
     const initialValues: Informacoes  = {
         id: 1,
@@ -26,9 +30,23 @@ const CadastrarInformacoes: React.FC = () => {
         resumo: Yup.string().required('Campo obrigatório')
     })
 
+    const fetchInformacao = async () => {
+        try {
+            const informacao = await getInformacoes();
+            setInformacoes(informacao);
+        } catch (error) {
+            console.error('Erro ao buscar informações:', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchInformacao();
+    }, []);
+
     const onSubmit = async (values: Informacoes, { resetForm }: { resetForm: () => void }) => {
         try {
             await createInformacoes(values);
+            setInformacoes(values)
             console.log(values);
             resetForm();
             alert('Formulário enviado com sucesso');
@@ -84,6 +102,9 @@ const CadastrarInformacoes: React.FC = () => {
                     </Form>
                 )}
             </Formik>
+
+            <InformacoesCard informacoes={informacoes}/>
+
         </div>
     );
 };
