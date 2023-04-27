@@ -33,3 +33,11 @@ export const deleteExperiencia = async (id: number) => {
     const response = await api.delete(`/experiencias/${id}`)
     return response.data;
 }
+
+export const createOrUpdateExperiencia = async ( experiencia: Experiencia) => {
+    if (experiencia.id === 0) {
+        return await createExperiencia(experiencia);
+    } else {
+        return await updateExperiencia(experiencia);
+    }
+}

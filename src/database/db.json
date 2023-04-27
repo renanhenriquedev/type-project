@@ -10,12 +10,12 @@
   ],
   "experiencias": [
     {
-      "id": 1,
-      "titulo": "Desenvolver de Software",
+      "id": 8,
+      "titulo": "teste 1",
       "descricao": "",
       "tipo": "profissional",
-      "anoInicio": "2023",
-      "anoFim": "2025"
+      "anoInicio": "20220",
+      "anoFim": "202"
     }
   ],
   "portfolio": []
