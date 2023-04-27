@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 
-import { Formik, Form} from 'formik'
+import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 
 import Input from '../../../components/forms/Input/Input';
 import styles from './CadastrarInformacoes.module.css'
 import Textarea from '../../../components/forms/Textarea/Textarea';
-import {Informacoes, createInformacoes, getInformacoes } from '../../../services/informacoesServices';
+import { Informacoes, updateInformacoes, getInformacoes } from '../../../services/informacoesServices';
 import InformacoesCard from './InformacoesCard/InformacoesCard';
 
 
@@ -15,7 +15,7 @@ const CadastrarInformacoes: React.FC = () => {
 
     const [informacoes, setInformacoes] = useState<Informacoes>({} as Informacoes);
 
-    const initialValues: Informacoes  = {
+    const initialValues: Informacoes = {
         id: 1,
         foto: '',
         nome: '',
@@ -45,7 +45,7 @@ const CadastrarInformacoes: React.FC = () => {
 
     const onSubmit = async (values: Informacoes, { resetForm }: { resetForm: () => void }) => {
         try {
-            await createInformacoes(values);
+            await updateInformacoes(values);
             setInformacoes(values)
             console.log(values);
             resetForm();
@@ -56,11 +56,32 @@ const CadastrarInformacoes: React.FC = () => {
         }
     }
 
+    const handleDelete = async () => {
+        try {
+            await updateInformacoes(initialValues);
+            setInformacoes(initialValues);
+            alert('Informações deletadas com sucesso')
+        } catch (error) {
+            console.error('Erro ao deletar informações:', error);
+            alert('Ocorreu um erro ao deletar as informações. Tente novamente.')
+        }
+    };
+
+    // const catchBtn = document.querySelector('#delete')
+    // console.log(catchBtn);
+    // catchBtn.addEventListener('click', => {
+
+    // })
+
 
     return (
         <div className={styles.formWrapper}>
 
-            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+            <Formik
+                initialValues={initialValues}
+                enableReinitialize={true}
+                validationSchema={validationSchema}
+                onSubmit={onSubmit}>
                 {({ errors, touched }) => (
                     <Form className={styles.form}>
 
@@ -93,7 +114,7 @@ const CadastrarInformacoes: React.FC = () => {
                             errors={errors.resumo}
                             touched={touched.resumo}
                         />
-                        
+
                         <button type='submit' className={styles.button}>
                             Salvar
                         </button>
@@ -103,8 +124,19 @@ const CadastrarInformacoes: React.FC = () => {
                 )}
             </Formik>
 
-            <InformacoesCard informacoes={informacoes}/>
-
+            {informacoes &&
+                Object.entries(informacoes).some(
+                    ([key, value]) => key !== 'id' && value.trim() !== ""
+                ) && (
+                    <div className={styles.cardContainer}>
+                        <InformacoesCard informacoes={informacoes} />
+                        <button
+                            id='delete'
+                            type='button'
+                            onClick={handleDelete}
+                            className={`${styles.button} ${styles.deleteButton}`}>Deletar</button>
+                    </div>
+                )}
         </div>
     );
 };

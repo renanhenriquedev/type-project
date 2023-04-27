@@ -8,34 +8,38 @@ import Input from '../../../components/forms/Input/Input';
 import Textarea from '../../../components/forms/Textarea/Textarea';
 import Select from '../../../components/forms/Select/Select';
 
-
-interface FormValues {
-    titulo: string;
-    descricao: string;
-    tipo: string;
-    anoFim: string;
-}
+import { Experiencia, createExperiencia } from '../../../services/experienciaService';
 
 const CadastrarExperiencia: React.FC = () => {
 
-    const initialValues: FormValues = {
+    const initialValues: Experiencia = {
+        id: 0,
         titulo: '',
         descricao: '',
         tipo: '',
+        anoInicio: '',
         anoFim: '',
     }
 
     const validationSchema = Yup.object().shape({
         titulo: Yup.string().required("Campo Obrigatório"),
-        descricao: Yup.string().required("Campo Obrigatório"),
+        descricao: Yup.string(),
         tipo: Yup.string().required("Campo Obrigatório"),
-        anoFim: Yup.string().required("Campo Obrigatório")
+        anoInicio: Yup.number().required("Campo Obrigatório").typeError("Um número é obrigatório"),
+        anoFim: Yup.number().required("Campo Obrigatório").typeError("Um número é obrigatório")
     })
 
-    const onSubmit = (values: FormValues, { resetForm }: { resetForm: () => void }) => {
-        console.log(values);
-        resetForm();
-        alert("Formulário enviado com sucesso")
+    const onSubmit = async (values: Experiencia, { resetForm }: { resetForm: () => void }) => {
+
+        try {
+            createExperiencia(values)
+            console.log(values);
+            resetForm();
+            alert("Formulário enviado com sucesso")
+        } catch (error) {
+            console.log(error);
+            alert("Ocorreu um erro ao enviar o formulário")
+        }
     }
 
     return (
@@ -57,8 +61,15 @@ const CadastrarExperiencia: React.FC = () => {
                         />
 
                         <Input
+                            label='ano Inicio'
+                            name='anoInicio'
+                            errors={errors.anoInicio}
+                            touched={touched.anoInicio}
+                        />
+
+                        <Input
                             label='ano Fim'
-                            name='anofim'
+                            name='anoFim'
                             errors={errors.anoFim}
                             touched={touched.anoFim}
                         />

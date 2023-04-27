@@ -12,9 +12,15 @@ interface InputProps {
     touched?: boolean; 
 }
 
-const Input: React.FC<InputProps> = ({label, name, type ='text', errors, touched}) =>  {
+const Input: React.FC<InputProps> = ({
+    label, 
+    name, 
+    type ='text', 
+    errors, 
+    touched
+}) =>  {    
     return (
-        <div className={styles.formGroup}>
+        <fieldset className={styles.formGroup}>
             <label htmlFor={name} className={styles.label}>
                 {label}:
             </label>
@@ -24,7 +30,7 @@ const Input: React.FC<InputProps> = ({label, name, type ='text', errors, touched
             name={name} 
             className={`${styles.input} ${touched && errors && styles.error}`} />
             <ErrorMessage name={name} component='div' className={styles.errorMsg} />
-        </div>
+        </fieldset>
     )
 }
 
