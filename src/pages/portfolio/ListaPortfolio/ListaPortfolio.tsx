@@ -1,42 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import styles from './ListaPorfolio.module.css'
 import { number } from "yup";
+import { deletePortfolio, getPortfolios, Portfolio} from "../../../services/portfolioService";
+import { useLocation, useNavigate } from "react-router-dom";
 
-    interface Portfolio {
-        link: string;
-        image: string;
-        title: string;
+
+
+const ListaPortfolio: React.FC = () => {
+
+    const navigate = useNavigate();
+
+    const [portfolio, setPortfolio] = React.useState<Portfolio[]>([]);
+
+    const fetchPortfolio = async () => {
+        try {
+            const portfolio = await getPortfolios();
+            setPortfolio(portfolio);
+        } catch (error) {
+            console.log('Erro ao buscar experiências', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPortfolio();
+    }, [])
+
+
+    const handleEdit = (portfolio: Portfolio) => {
+        navigate('/portfolio/cadastro', { state: portfolio })
     }
 
-
-    const ListaPortfolio: React.FC = () => {
-        
-        const [portfolio, setPortfolio] = useState<Portfolio[]> ([
-            {
-                link: "https: //pixelart-project.surge.sh/",
-                image: "https://github.com/renanhenriquedev/portfolio-react/blob/main/src/imagens/pixel-art.png?raw=true",
-            title: 'Projeto 1'
-        },
-        {
-            link: "https://github.com/renanhenriquedev/to-do-list",
-            image: "https://github.com/renanhenriquedev/portfolio-react/blob/main/src/imagens/list.png?raw=true",
-            title: 'Projeto 2'
-        },
-        {
-            link: "https://github.com/renanhenriquedev/hamburger-shop",
-            image: "https://github.com/renanhenriquedev/portfolio-react/blob/main/src/imagens/burguer.png?raw=true ",
-            title: 'Projeto 3'
+    const handleDelete = async (id: number) => {
+        try {
+            await deletePortfolio(id)
+            fetchPortfolio();
+            alert('Portfolio excluído com sucesso!')
+        } catch (error) {
+            console.log('Erro ao excluir a experiência');
+            
         }
-    ]);
-    
-    const handleEdit = (index: number) => {
-        // Lógica para lidar com a edição do item de indíce index
-    }    
-    
-    const handleDelete = (index: number) => {
-        setPortfolio(portfolio.filter((_, i) => i !== index));
-    }    
+    }
     return (
         <table className={styles.table}>
             <thead>
@@ -45,6 +49,7 @@ import { number } from "yup";
                     <th>Imagem</th>
                     <th>Link</th>
                     <th>Ações</th>
+                    <th>Descrição</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,9 +59,10 @@ import { number } from "yup";
                         <td><img src={itemPortfolio.image} alt={itemPortfolio.title} className={styles.image} ></img></td>
                         <td><a href={itemPortfolio.link} target="_blank" rel='noreferrer'> {itemPortfolio.link}</a></td>
                         <td>
-                            <button onClick={() => handleEdit(index)}>Editar</button>
-                            <button onClick={() => handleDelete(index)}>Excluir</button>
+                            <button onClick={() => handleEdit(itemPortfolio)}>Editar</button>
+                            <button onClick={() => handleDelete(itemPortfolio.id)}>Excluir</button>
                         </td>
+                        <td>{itemPortfolio.description}</td>
                     </tr>
                 ))}
             </tbody>

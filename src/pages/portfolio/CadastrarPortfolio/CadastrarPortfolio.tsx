@@ -4,46 +4,54 @@ import styles from './CadastrarPortfolio.module.css'
 
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 
-
 import * as Yup from 'yup'
 import Input from '../../../components/forms/Input';
 
-interface FormValues {
-    link: string;
-    image: string;
-    title: string;
-}
-
-const initialValues: FormValues = {
-    link: '',
-    image: '',
-    title: ''
-};
-
-const validationSchema = Yup.object().shape({
-    link: Yup.string().required('Campo obrigatório'),
-    image: Yup.string().required('Campo obrigatório'),
-    title: Yup.string().required('Campo obrigatório')
-})
-
+import { Portfolio, createOrUpdatePortfolio } from '../../../services/portfolioService';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const CadastrarPortfolio: React.FC = () => {
+    
+    const navigate = useNavigate();
+    const location = useLocation()
+    const portfolio = location.state as Portfolio;
 
-    const onSubmit = (
-        values: FormValues,
-        { resetForm }: { resetForm: () => void }
-    ) => {
-        // Lógica de envio para o backend
-        console.log(values);
-        resetForm();
-        alert("Formulário enviado com sucesso")
+
+    const initialValues: Portfolio = {
+        id: 0,
+        link: '',
+        image: '',
+        title: '',
+        description: ''
+    };
+    
+    const validationSchema = Yup.object().shape({
+        link: Yup.string().required('Campo obrigatório'),
+        image: Yup.string().required('Campo obrigatório'),
+        title: Yup.string().required('Campo obrigatório'),
+        description: Yup.string().required('Campo obrigatório')
+    })
+    
+    
+    const onSubmit = async (values: Portfolio, { resetForm }: { resetForm: () => void }) => {
+        try {
+            await createOrUpdatePortfolio(values);
+            console.log(values);
+            navigate('/portfolio/lista')
+            resetForm();
+            alert("Formulário enviado com sucesso")
+        } catch (error) {
+            console.log(error);
+            alert("Ocorreu um erro ao enviar o formulário")
+        }
+
 
     }
 
     return (
         <div className={styles.formWrapper}>
             <Formik
-                initialValues={initialValues}
+                initialValues={portfolio || initialValues}
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}
             >
@@ -71,8 +79,14 @@ const CadastrarPortfolio: React.FC = () => {
                             errors={errors.title}
                             touched={touched.title}
                         />
+                           <Input
+                            label='Description'
+                            name='description'
+                            errors={errors.description}
+                            touched={touched.description}
+                        />
      
-                        <button type='submit' className={styles.button}>Enviar</button>
+                        <button type='submit' className={styles.button}>Salvar</button>
 
                     </Form>
                 )}
