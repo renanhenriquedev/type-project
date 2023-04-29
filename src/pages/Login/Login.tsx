@@ -7,6 +7,8 @@ import { Formik, Form } from "formik";
 import * as Yup from 'yup';
 
 import Input from "../../components/forms/Input";
+import { login as loginService } from "../../services/authService";
+import { useAuth } from "../../contexts/AuthContetx";
 
 
 interface LoginValues {
@@ -34,10 +36,13 @@ const Login = () => {
 
     const navigate = useNavigate()
 
-    const onSubmit =async (values: LoginValues) => {
+    const {login} = useAuth()
+
+    const onSubmit = async (values: LoginValues) => {
         
         try {
-            
+             const user = await loginService(values.email, values.password);
+            login(user)
             navigate('/');
             console.log(values);
             
@@ -45,8 +50,7 @@ const Login = () => {
         } catch (error) {
             
             console.log(error);
-            
-
+            alert('Erro ao realizar Login')
         }
 
     };
