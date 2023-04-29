@@ -16,22 +16,37 @@
       "tipo": "profissional",
       "anoInicio": "20220",
       "anoFim": "202"
+    },
+    {
+      "id": 9,
+      "titulo": "teste 5",
+      "descricao": "",
+      "tipo": "academico",
+      "anoInicio": "123",
+      "anoFim": "123"
     }
   ],
   "portfolio": [
     {
       "id": 1,
-      "link": "sadas",
-      "image": "dasa",
-      "title": "ads",
-      "description": "das"
+      "link": "https://github.com/renanhenriquedev/Pixel-Art",
+      "image": "https://uploaddeimagens.com.br/images/004/447/634/thumb/Captura_de_tela_de_2023-04-28_14-08-37.png?1682705831",
+      "title": "Pixel Art",
+      "description": "Projeto com funcionalidades de HTML, CSS e Javascript com o objetivo de simular uma plataforma de pixel art para fazer os seus desenhos."
+    },
+    {
+      "id": 2,
+      "link": "https://github.com/renanhenriquedev/to-do-list",
+      "image": "https://uploaddeimagens.com.br/images/004/447/627/thumb/Captura_de_tela_de_2023-04-28_14-08-48.png?1682705758",
+      "title": "To-do-list",
+      "description": "Projeto com funcionalidades de HTML, CSS e Javascript com o objetivo de simular uma plataforma de lista de tarefas para o dia a dia."
     },
     {
       "id": 3,
-      "link": "teste 3",
-      "image": "teste 3",
-      "title": "teste 3",
-      "description": "teste 3"
+      "link": "https://github.com/renanhenriquedev/hamburger-shop",
+      "image": "https://uploaddeimagens.com.br/images/004/447/454/full/Captura_de_tela_de_2023-04-28_14-07-45.png?1682701682",
+      "title": "Burguer Project",
+      "description": "Projeto com funcionalidades de HTML e CSS com o objeito de simular um site de uma hamburgueria local."
     }
   ]
 }
