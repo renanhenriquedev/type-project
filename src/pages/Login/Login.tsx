@@ -10,6 +10,8 @@ import Input from "../../components/forms/Input";
 import { login as loginService } from "../../services/authService";
 import { useAuth } from "../../contexts/AuthContetx";
 import Form from "../../components/forms/Form";
+import Button from "../../components/common/Button";
+import Title from "../../components/common/Title";
 
 
 interface LoginValues {
@@ -99,7 +101,10 @@ const Login = () => {
             >
                 {({ errors, touched }) => (
                     <>
-                        <h1 className={styles.title}>Meu Site Pessoal </h1>
+
+                        <Title>Meu Site Pessoal</Title>
+
+
                         <Input
                             label="Email"
                             name='email'
@@ -116,9 +121,9 @@ const Login = () => {
                             touched={touched.password}
                         />
 
-                        <button type='submit' className={styles.button}>
+                        <Button type='submit'>
                             Login
-                        </button>
+                        </Button>
                     </>
 
                 )}
