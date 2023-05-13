@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 
-import { Formik, Form } from 'formik'
+import { Formik } from 'formik'
 import * as Yup from 'yup'
 
 import Input from '../../../components/forms/Input/Input';
@@ -10,6 +10,9 @@ import Textarea from '../../../components/forms/Textarea/Textarea';
 import { Informacoes, updateInformacoes, getInformacoes } from '../../../services/informacoesServices';
 import InformacoesCard from './InformacoesCard/InformacoesCard';
 import Button from '../../../components/common/Button';
+
+import Form from "../../../components/forms/Form/";
+
 
 
 const CadastrarInformacoes: React.FC = () => {
@@ -25,6 +28,7 @@ const CadastrarInformacoes: React.FC = () => {
     }
 
     const validationSchema = Yup.object().shape({
+        id: Yup.number().required('Campo obrigatório'),
         foto: Yup.string().required('Campo obrigatório'),
         nome: Yup.string().required('Campo obrigatório'),
         cargo: Yup.string().required('Campo obrigatório'),
@@ -77,7 +81,7 @@ const CadastrarInformacoes: React.FC = () => {
 
     return (
         <div className={styles.formWrapper}>
-
+{/* 
             <Formik
                 initialValues={initialValues}
                 enableReinitialize={true}
@@ -120,7 +124,50 @@ const CadastrarInformacoes: React.FC = () => {
                      
                     </Form>
                 )}
-            </Formik>
+            </Formik> */}
+
+            <Form initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={onSubmit}
+                >
+                   
+                {({ errors, touched }) => (
+
+                         <>
+                        <h2 className={styles.title}>Informações Pessoais</h2>
+
+                        <Input
+                            label='Foto'
+                            name='foto'
+                            errors={errors.foto}
+                            touched={touched.foto}
+                        />
+
+                        <Input
+                            label='Nome'
+                            name='nome'
+                            errors={errors.nome}
+                            touched={touched.nome}
+                        />
+
+                        <Input
+                            label='Cargo'
+                            name='cargo'
+                            errors={errors.cargo}
+                            touched={touched.cargo}
+                        />
+
+                        <Textarea
+                            label='Resumo'
+                            name='resumo'
+                            errors={errors.resumo}
+                            touched={touched.resumo}
+                        />
+
+                        <Button type='submit'>Salvar</Button>
+                    </>
+                )}
+            </Form>
 
             {informacoes &&
                 Object.entries(informacoes).some(
