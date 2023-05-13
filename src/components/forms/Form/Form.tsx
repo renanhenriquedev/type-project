@@ -15,7 +15,7 @@ const Form = <T extends FormikValues>({ children, initialValues, validationSchem
         <div className={styles.formWrapper}>
 
                 <Formik 
-                    initialValues={ initialValues}
+                    initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={onSubmit}
                     >

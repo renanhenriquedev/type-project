@@ -4,6 +4,8 @@ import styles from './CadastrarPortfolio.module.css'
 
 import { Formik, Field, ErrorMessage } from 'formik'
 
+import { Form as FormikForm } from 'formik';
+
 import * as Yup from 'yup'
 import Input from '../../../components/forms/Input';
 
@@ -41,8 +43,8 @@ const CadastrarPortfolio: React.FC = () => {
         try {
             await createOrUpdatePortfolio(values);
             console.log(values);
-            navigate('/portfolio/lista')
             resetForm();
+            navigate('/portfolio/lista')
             alert("Formulário enviado com sucesso")
         } catch (error) {
             console.log(error);
@@ -54,13 +56,14 @@ const CadastrarPortfolio: React.FC = () => {
 
     return (
         <div className={styles.formWrapper}>
-            {/* <Formik
+
+            <Formik
                 initialValues={portfolio || initialValues}
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}
             >
                 {({ errors, touched }) => (
-                    <Form className={styles.form}>
+                    <FormikForm className={styles.form}>
                         <h2 className={styles.title}>Cadastro de Portfolio</h2>
 
                         <Input
@@ -92,47 +95,47 @@ const CadastrarPortfolio: React.FC = () => {
 
                         <button type='submit' className={styles.button}>Salvar</button>
 
-                    </Form>
+                    </FormikForm>
                 )}
 
-            </Formik> */}
+            </Formik>
 
-            <Form initalValues={initialValues}
+            <Form initialValues={portfolio || initialValues}
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}
             >
                 {({ errors, touched }) => (
                     <>
-                        <h2 className={styles.title}>Cadastro de Portfolio</h2>
+                            <h2 className={styles.title}>Cadastro de Portfolio</h2>
 
-                        <Input
-                            label='Link'
-                            name='link'
-                            errors={errors.link}
-                            touched={touched.link}
-                        />
+                            <Input
+                                label='Link'
+                                name='link'
+                                errors={errors.link}
+                                touched={touched.link}
+                            />
 
-                        <Input
-                            label='Imagem'
-                            name='image'
-                            errors={errors.image}
-                            touched={touched.image}
-                        />
+                            <Input
+                                label='Imagem'
+                                name='image'
+                                errors={errors.image}
+                                touched={touched.image}
+                            />
 
-                        <Input
-                            label='Título'
-                            name='title'
-                            errors={errors.title}
-                            touched={touched.title}
-                        />
-                        <Input
-                            label='Description'
-                            name='description'
-                            errors={errors.description}
-                            touched={touched.description}
-                        />
+                            <Input
+                                label='Título'
+                                name='title'
+                                errors={errors.title}
+                                touched={touched.title}
+                            />
+                            <Input
+                                label='Description'
+                                name='description'
+                                errors={errors.description}
+                                touched={touched.description}
+                            />
 
-                        <Button type='submit'> Salvar</Button>
+                            <Button type='submit'> Salvar</Button>
                     </>
                 )}
             </Form>
