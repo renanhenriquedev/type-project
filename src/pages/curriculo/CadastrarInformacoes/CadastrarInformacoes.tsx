@@ -116,11 +116,8 @@ const CadastrarInformacoes: React.FC = () => {
                             touched={touched.resumo}
                         />
 
-                        <button type='submit' className={styles.button}>
-                            Salvar
-                        </button>
-
-
+                        <Button type='submit'>Salvar</Button>
+                     
                     </Form>
                 )}
             </Formik>
