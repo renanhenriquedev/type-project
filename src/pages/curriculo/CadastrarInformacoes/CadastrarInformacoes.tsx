@@ -72,59 +72,8 @@ const CadastrarInformacoes: React.FC = () => {
         }
     };
 
-    // const catchBtn = document.querySelector('#delete')
-    // console.log(catchBtn);
-    // catchBtn.addEventListener('click', => {
-
-    // })
-
-
     return (
         <div className={styles.formWrapper}>
-{/* 
-            <Formik
-                initialValues={initialValues}
-                enableReinitialize={true}
-                validationSchema={validationSchema}
-                onSubmit={onSubmit}>
-                {({ errors, touched }) => (
-                    <Form className={styles.form}>
-
-                        <h2 className={styles.title}>Informações Pessoais</h2>
-
-                        <Input
-                            label='Foto'
-                            name='foto'
-                            errors={errors.foto}
-                            touched={touched.foto}
-                        />
-
-                        <Input
-                            label='Nome'
-                            name='nome'
-                            errors={errors.nome}
-                            touched={touched.nome}
-                        />
-
-                        <Input
-                            label='Cargo'
-                            name='cargo'
-                            errors={errors.cargo}
-                            touched={touched.cargo}
-                        />
-
-                        <Textarea
-                            label='Resumo'
-                            name='resumo'
-                            errors={errors.resumo}
-                            touched={touched.resumo}
-                        />
-
-                        <Button type='submit'>Salvar</Button>
-                     
-                    </Form>
-                )}
-            </Formik> */}
 
             <Form initialValues={initialValues}
                 validationSchema={validationSchema}
