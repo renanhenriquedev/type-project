@@ -1,18 +1,3 @@
-.form-wrapper {
-    display: flex;
-    justify-content: center;
-}
-
-.form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 60%;
-    background-color: #f2f2f2;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 50px;
-}
 
 .formGroup {
     display: flex;
@@ -49,25 +34,6 @@
     border: none;
     background-color: #ffffff;
     margin-top: 5px;
-}
-
-.button {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    color: #fff;
-    background-color: #0077cc;
-    border-radius: 0.25 rem;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-}
-
-.button:hover {
-    background-color: #005fa3;
 }
 
 .error {

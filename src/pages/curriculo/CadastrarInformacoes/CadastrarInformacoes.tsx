@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 
-import { Formik, Form } from 'formik'
+import { Formik } from 'formik'
 import * as Yup from 'yup'
 
 import Input from '../../../components/forms/Input/Input';
@@ -10,6 +10,9 @@ import Textarea from '../../../components/forms/Textarea/Textarea';
 import { Informacoes, updateInformacoes, getInformacoes } from '../../../services/informacoesServices';
 import InformacoesCard from './InformacoesCard/InformacoesCard';
 import Button from '../../../components/common/Button';
+
+import Form from "../../../components/forms/Form/";
+
 
 
 const CadastrarInformacoes: React.FC = () => {
@@ -25,6 +28,7 @@ const CadastrarInformacoes: React.FC = () => {
     }
 
     const validationSchema = Yup.object().shape({
+        id: Yup.number().required('Campo obrigatório'),
         foto: Yup.string().required('Campo obrigatório'),
         nome: Yup.string().required('Campo obrigatório'),
         cargo: Yup.string().required('Campo obrigatório'),
@@ -68,24 +72,17 @@ const CadastrarInformacoes: React.FC = () => {
         }
     };
 
-    // const catchBtn = document.querySelector('#delete')
-    // console.log(catchBtn);
-    // catchBtn.addEventListener('click', => {
-
-    // })
-
-
     return (
         <div className={styles.formWrapper}>
 
-            <Formik
-                initialValues={initialValues}
-                enableReinitialize={true}
+            <Form initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={onSubmit}>
+                onSubmit={onSubmit}
+                >
+                   
                 {({ errors, touched }) => (
-                    <Form className={styles.form}>
 
+                         <>
                         <h2 className={styles.title}>Informações Pessoais</h2>
 
                         <Input
@@ -116,14 +113,10 @@ const CadastrarInformacoes: React.FC = () => {
                             touched={touched.resumo}
                         />
 
-                        <button type='submit' className={styles.button}>
-                            Salvar
-                        </button>
-
-
-                    </Form>
+                        <Button type='submit'>Salvar</Button>
+                    </>
                 )}
-            </Formik>
+            </Form>
 
             {informacoes &&
                 Object.entries(informacoes).some(

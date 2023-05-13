@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './CadastrarExperiencia.module.css'
 
 import * as Yup from 'yup';
-import { Formik, Form } from 'formik';
+import { Formik } from 'formik';
 import Input from '../../../components/forms/Input/Input';
 import Textarea from '../../../components/forms/Textarea/Textarea';
 import Select from '../../../components/forms/Select/Select';
@@ -11,10 +11,14 @@ import Select from '../../../components/forms/Select/Select';
 import { Experiencia, createOrUpdateExperiencia } from '../../../services/experienciaService';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import Form from '../../../components/forms/Form'
+import Button from '../../../components/common/Button';
+
+
 const CadastrarExperiencia: React.FC = () => {
 
     const navigate = useNavigate();
-    const location = useLocation(); 
+    const location = useLocation();
     const experiencia = location.state as Experiencia;
 
     const initialValues: Experiencia = {
@@ -22,11 +26,12 @@ const CadastrarExperiencia: React.FC = () => {
         titulo: '',
         descricao: '',
         tipo: '',
-        anoInicio: '',
-        anoFim: '',
+        anoInicio: 2022,
+        anoFim: 2023,
     }
 
     const validationSchema = Yup.object().shape({
+        id: Yup.number().required('Campo obrigatório'),
         titulo: Yup.string().required("Campo Obrigatório"),
         descricao: Yup.string(),
         tipo: Yup.string().required("Campo Obrigatório"),
@@ -50,13 +55,15 @@ const CadastrarExperiencia: React.FC = () => {
 
     return (
         <div className={styles.formWrapper}>
-            <Formik
-                initialValues={ experiencia || initialValues}
+
+            <Form initialValues={experiencia || initialValues}
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}
+
             >
+
                 {({ errors, touched }) => (
-                    <Form className={styles.form}>
+                    <>
                         <h2 className={styles.title}> Cadastro de Experiência</h2>
 
                         <Input
@@ -99,12 +106,11 @@ const CadastrarExperiencia: React.FC = () => {
                             touched={touched.descricao}
                         />
 
-                        <button type='submit' className={styles.button}>
-                            Salvar
-                        </button>
-                    </Form>
+                        <Button type='submit'>Salvar</Button>
+                </>
                 )}
-            </Formik>
+            </Form>
+
         </div >
     )
 }
