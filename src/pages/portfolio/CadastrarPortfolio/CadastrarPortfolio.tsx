@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './CadastrarPortfolio.module.css'
 
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { Formik, Field, ErrorMessage } from 'formik'
 
 import * as Yup from 'yup'
 import Input from '../../../components/forms/Input';
@@ -10,8 +10,11 @@ import Input from '../../../components/forms/Input';
 import { Portfolio, createOrUpdatePortfolio } from '../../../services/portfolioService';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+import Button from "../../../components/common/Button";
+import Form from '../../../components/forms/Form';
+
 const CadastrarPortfolio: React.FC = () => {
-    
+
     const navigate = useNavigate();
     const location = useLocation()
     const portfolio = location.state as Portfolio;
@@ -24,15 +27,16 @@ const CadastrarPortfolio: React.FC = () => {
         title: '',
         description: ''
     };
-    
+
     const validationSchema = Yup.object().shape({
+        id: Yup.number().required('Campo obrigatório'),
         link: Yup.string().required('Campo obrigatório'),
         image: Yup.string().required('Campo obrigatório'),
         title: Yup.string().required('Campo obrigatório'),
         description: Yup.string().required('Campo obrigatório')
     })
-    
-    
+
+
     const onSubmit = async (values: Portfolio, { resetForm }: { resetForm: () => void }) => {
         try {
             await createOrUpdatePortfolio(values);
@@ -50,7 +54,7 @@ const CadastrarPortfolio: React.FC = () => {
 
     return (
         <div className={styles.formWrapper}>
-            <Formik
+            {/* <Formik
                 initialValues={portfolio || initialValues}
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}
@@ -79,19 +83,60 @@ const CadastrarPortfolio: React.FC = () => {
                             errors={errors.title}
                             touched={touched.title}
                         />
-                           <Input
+                        <Input
                             label='Description'
                             name='description'
                             errors={errors.description}
                             touched={touched.description}
                         />
-     
+
                         <button type='submit' className={styles.button}>Salvar</button>
 
                     </Form>
                 )}
 
-            </Formik>
+            </Formik> */}
+
+            <Form initalValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={onSubmit}
+            >
+                {({ errors, touched }) => (
+                    <>
+                        <h2 className={styles.title}>Cadastro de Portfolio</h2>
+
+                        <Input
+                            label='Link'
+                            name='link'
+                            errors={errors.link}
+                            touched={touched.link}
+                        />
+
+                        <Input
+                            label='Imagem'
+                            name='image'
+                            errors={errors.image}
+                            touched={touched.image}
+                        />
+
+                        <Input
+                            label='Título'
+                            name='title'
+                            errors={errors.title}
+                            touched={touched.title}
+                        />
+                        <Input
+                            label='Description'
+                            name='description'
+                            errors={errors.description}
+                            touched={touched.description}
+                        />
+
+                        <Button type='submit'> Salvar</Button>
+                    </>
+                )}
+            </Form>
+
         </div>
     )
 }
