@@ -56,50 +56,6 @@ const CadastrarPortfolio: React.FC = () => {
 
     return (
         <div className={styles.formWrapper}>
-
-            <Formik
-                initialValues={portfolio || initialValues}
-                validationSchema={validationSchema}
-                onSubmit={onSubmit}
-            >
-                {({ errors, touched }) => (
-                    <FormikForm className={styles.form}>
-                        <h2 className={styles.title}>Cadastro de Portfolio</h2>
-
-                        <Input
-                            label='Link'
-                            name='link'
-                            errors={errors.link}
-                            touched={touched.link}
-                        />
-
-                        <Input
-                            label='Imagem'
-                            name='image'
-                            errors={errors.image}
-                            touched={touched.image}
-                        />
-
-                        <Input
-                            label='Título'
-                            name='title'
-                            errors={errors.title}
-                            touched={touched.title}
-                        />
-                        <Input
-                            label='Description'
-                            name='description'
-                            errors={errors.description}
-                            touched={touched.description}
-                        />
-
-                        <button type='submit' className={styles.button}>Salvar</button>
-
-                    </FormikForm>
-                )}
-
-            </Formik>
-
             <Form initialValues={portfolio || initialValues}
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}
