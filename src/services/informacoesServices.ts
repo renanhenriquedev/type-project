@@ -23,7 +23,19 @@ export async function getInformacoes(): Promise<Informacoes> {
 //     return response.data;
 // }
 
-export async function deleteInformacoes(informacoes: Informacoes): Promise<Informacoes> {
-    const response = await api.delete<Informacoes>('/informacoes/1');
-    return response.data    
+export async function deleteInformacoes(): Promise<void> {
+    await api.delete<Informacoes>('/informacoes/1');
+}
+
+export const createOrUpdateInformacoes = async (informacoes: Informacoes): Promise<Informacoes> => {
+    if (informacoes.id) {
+        return await updateInformacoes(informacoes);
+    } else {
+        return await createInformacoes(informacoes);
+    }
+}
+
+export const createInformacoes = async (informacoes: Informacoes): Promise<Informacoes> => {
+    const response = await api.post<Informacoes>("/informacoes", informacoes);
+    return response.data;
 }

@@ -7,7 +7,7 @@ import * as Yup from 'yup'
 import Input from '../../../components/forms/Input/Input';
 import styles from './CadastrarInformacoes.module.css'
 import Textarea from '../../../components/forms/Textarea/Textarea';
-import { Informacoes, updateInformacoes, getInformacoes } from '../../../services/informacoesServices';
+import { Informacoes, updateInformacoes, getInformacoes, createOrUpdateInformacoes, deleteInformacoes, createInformacoes } from '../../../services/informacoesServices';
 import InformacoesCard from './InformacoesCard/InformacoesCard';
 import Button from '../../../components/common/Button';
 
@@ -50,7 +50,7 @@ const CadastrarInformacoes: React.FC = () => {
 
     const onSubmit = async (values: Informacoes, { resetForm }: { resetForm: () => void }) => {
         try {
-            await updateInformacoes(values);
+            await createInformacoes(values);
             setInformacoes(values)
             console.log(values);
             resetForm();
@@ -63,7 +63,7 @@ const CadastrarInformacoes: React.FC = () => {
 
     const handleDelete = async () => {
         try {
-            await updateInformacoes(initialValues);
+            await deleteInformacoes();
             setInformacoes(initialValues);
             alert('Informações deletadas com sucesso')
         } catch (error) {
