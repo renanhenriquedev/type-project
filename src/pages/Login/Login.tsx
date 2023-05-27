@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
 
 import Input from "../../components/forms/Input";
-import { login as loginService } from "../../services/authService";
+import { LoginData, login as loginService } from "../../services/authService";
 import { useAuth } from "../../contexts/AuthContetx";
 import Form from "../../components/forms/Form";
 import Button from "../../components/common/Button";
@@ -19,7 +19,7 @@ interface LoginValues {
     password: string;
 }
 
-const initialValues: LoginValues = {
+const initialValues: LoginData = {
     email: '',
     password: '',
 };
@@ -41,10 +41,10 @@ const Login = () => {
 
     const { login } = useAuth()
 
-    const onSubmit = async (values: LoginValues) => {
+    const onSubmit = async (values: LoginData) => {
 
         try {
-            const user = await loginService(values.email, values.password);
+            const user = await loginService(values);
             login(user)
             navigate('/');
             console.log(values);

@@ -33,7 +33,7 @@ const ListarExperiencia: React.FC = () => {
         try {
             await deleteExperiencia(id);
             fetchExperiencias();
-            console.log('Experiencia excluída com sucesso');
+            alert('Experiencia excluída com sucesso');
         } catch (error) {
             console.log('Erro ao excluir experiência', error);
             alert('Ocorreu um erro ao excluir a experiência');
